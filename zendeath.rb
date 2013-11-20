@@ -69,9 +69,15 @@ class Commands
       pagecount += 1
       @uri.query = 'page=' + pagecount.to_s
       @response = JSON.parse(makerequest)
-      puts @response['next_page']
       alltickets.concat(@response['tickets'])
     end
+#    binding.pry
+
+    unsolved_tickets = alltickets.reject { |element| element['status'] == 'closed' }
+
+    puts "Total Tickets: #{alltickets.length.to_s}"
+    puts "Unsolved Tickets: #{unsolved_tickets.length.to_s}"
+
   end
 end
 
