@@ -10,9 +10,10 @@ details.
 Current commands include:
 
   * me - Shows what Zendesk knows about the current user.
-  * localinfo - shows config data.
+  * localinfo - Shows config data.
   * alltickets - Shows total number of tickets, plus number of unsolved
-ticekts.
+tickets.
+  * myworking - Shows your current working tickets + some data.
 
 Currently has no external dependencies for real functionality, but
 requires pry because reasons.
