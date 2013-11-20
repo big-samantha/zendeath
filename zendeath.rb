@@ -18,6 +18,8 @@ class Commands
     @uri = URI.parse("https://#{baseurl}/")
     @username = username
     @password = password
+    @uri.path = '/api/v2/users/me.json'
+    @current_user_info = JSON.parse(makerequest)
   end
 
   def localinfo
@@ -36,11 +38,9 @@ class Commands
   end
 
   def me
-    @uri.path = '/api/v2/users/me.json'
-    @response = JSON.parse(makerequest)
 
     def userelement(field)
-      @response['user'][field]
+      @current_user_info['user'][field]
     end
 
     user_name = userelement('name')
@@ -77,8 +77,12 @@ class Commands
 
     puts "Total Tickets: #{alltickets.length.to_s}"
     puts "Unsolved Tickets: #{unsolved_tickets.length.to_s}"
+  end
+
+  def unsolved_tickets
 
   end
+
 end
 
 command = Commands.new(baseurl, username, password)
