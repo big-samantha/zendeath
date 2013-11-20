@@ -6,7 +6,6 @@ require 'net/http'
 require 'net/https'
 require 'yaml'
 require 'json'
-require 'pry'
 
 configdata = YAML.load_file('config.yaml')
 baseurl = configdata[:baseurl]
@@ -37,8 +36,13 @@ class Commands
     return @response = @http.request(@request).body
   end
 
-  def me
+  def get_this_user(userid)
+    @uri.path = "/api/v2/users/#{userid}.json"
+    @uri.query = ''
+    return JSON.parse(makerequest)['user']
+  end
 
+  def me
     def userelement(field)
       @current_user_info['user'][field]
     end
@@ -71,7 +75,6 @@ class Commands
       @response = JSON.parse(makerequest)
       alltickets.concat(@response['tickets'])
     end
-#    binding.pry
 
     unsolved_tickets = alltickets.reject { |element| element['status'] == 'closed' }
 
@@ -79,8 +82,19 @@ class Commands
     puts "Unsolved Tickets: #{unsolved_tickets.length.to_s}"
   end
 
-  def unsolved_tickets
+  def myworking
+    @uri.path = '/api/v2/search.json'
+    @uri.query = URI.encode("query=status<solved+assignee:#{@username}+type:ticket")
+    @my_working_tickets = JSON.parse(makerequest)['results']
 
+    @my_working_tickets.each do |ticket|
+      requester = get_this_user(ticket['requester_id'])['name']
+      puts ticket['id'].to_s + ': ' + ticket['subject']
+      puts "Requester: #{requester}"
+      puts 'Status: ' + ticket['status']
+      puts ''
+    end
+    puts "Total Working Tickets: #{@my_working_tickets.length}"
   end
 
 end
@@ -94,11 +108,14 @@ when 'me'
   command.me
 when 'alltickets'
   command.alltickets
+when 'myworking'
+  command.myworking
 else
   puts 'Error!
-  Current commands include:
+  Current commands include
   - localinfo
   - me
-  - alltickets'
+  - alltickets
+  - myworking'
 end
 end
