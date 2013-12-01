@@ -6,6 +6,7 @@ require 'net/http'
 require 'net/https'
 require 'yaml'
 require 'json'
+require 'pry'
 
 configdata = YAML.load_file('config.yaml')
 baseurl = configdata[:baseurl]
@@ -97,6 +98,21 @@ class Commands
     puts "Total Working Tickets: #{@my_working_tickets.length}"
   end
 
+  def ticketinfo(ticketid)
+    @uri.path = "/api/v2/tickets/#{ticketid.to_s}.json"
+    JSON.parse(makerequest)
+  end
+
+  def ticketcomments(ticketid)
+    @uri.path = "/api/v2/tickets/:#{ticketid.to_s}/comments.json"
+    JSON.parse(makerequest)
+  end
+
+  def showticket(ticketid)
+    info = ticketinfo(ticketid)
+    comments = ticketcomments(ticketid)
+  end
+
 end
 
 command = Commands.new(baseurl, username, password)
@@ -110,12 +126,21 @@ when 'alltickets'
   command.alltickets
 when 'myworking'
   command.myworking
+when 'ticketinfo'
+  command.ticketinfo(ARGV[1])
+when 'ticketcomments'
+  command.ticketcomments(ARGV[1])
+when 'showticket'
+  command.showticket(ARGV[1])
 else
   puts 'Error!
   Current commands include
   - localinfo
   - me
   - alltickets
-  - myworking'
+  - myworking
+  - ticketinfo <ticketid> - Not useful on its own.
+  - ticketcomments <ticketid> - Not useful on its own.
+  - showticket <ticketid>'
 end
 end
