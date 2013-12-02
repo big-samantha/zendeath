@@ -104,15 +104,25 @@ class Commands
   end
 
   def ticketcomments(ticketid)
-    @uri.path = "/api/v2/tickets/:#{ticketid.to_s}/comments.json"
+    @uri.path = "/api/v2/tickets/#{ticketid.to_s}/comments.json"
     JSON.parse(makerequest)
   end
 
   def showticket(ticketid)
     info = ticketinfo(ticketid)
     comments = ticketcomments(ticketid)
-  end
 
+    puts "Ticket ID:      #{info['ticket']['id']}"
+    puts "Status:         #{info['ticket']['status']}"
+    puts "Last Updated:   #{info['ticket']['updated_at']}"
+    puts "Subject:        #{info['ticket']['subject']}"
+    puts ""
+    comments['comments'].reverse.each do |comment|
+      puts "Timestamp: #{comment['created_at']}"
+      puts "Comment: #{comment['body']}"
+      puts "########################"
+    end
+  end
 end
 
 command = Commands.new(baseurl, username, password)
@@ -131,6 +141,9 @@ when 'ticketinfo'
 when 'ticketcomments'
   command.ticketcomments(ARGV[1])
 when 'showticket'
+  unless ARGV.length == 2
+    raise ArgumentError.new('showticket requires a ticket number')
+  end
   command.showticket(ARGV[1])
 else
   puts 'Error!
