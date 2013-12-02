@@ -14,8 +14,17 @@ Current commands include:
   * alltickets - Shows total number of tickets, plus number of unsolved
 tickets.
   * myworking - Shows your current working tickets + some data.
+  * showticket - Show ticket info + comments.
 
 Currently has no external dependencies for real functionality, but
-requires pry because reasons.
+requires pry because I'm lazy and it's a work in progress.
 
 No tests because I don't know how to write tests yet.
+
+
+#### todo
+
+- [ ] showticket should give requester name
+- [ ] showticket should left/right justify for requester/agent
+- [ ] Ability to post updates to tickets
+- [ ] Ability to change status of tickets
