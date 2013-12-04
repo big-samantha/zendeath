@@ -14,8 +14,6 @@ module Zendeath
   username = configdata[:username]
   password = configdata[:password]
 
-
-
   command = Commands.new(baseurl, username, password)
 
   case ARGV[0]
