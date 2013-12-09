@@ -29,6 +29,10 @@ module Zendeath
     command.ticketinfo(ARGV[1])
   when 'ticketcomments'
     command.ticketcomments(ARGV[1])
+  when 'update'
+    # def updateticket(ticketid, comment, status='open', is_public='true')
+
+    command.updateticket(ARGV[1])
   when 'showticket'
     unless ARGV.length == 2
       raise ArgumentError.new('showticket requires a ticket number')
@@ -36,13 +40,17 @@ module Zendeath
     command.showticket(ARGV[1])
   else
     puts 'Error!
-    Current commands include
+    Current commands include:
     - localinfo
     - me
     - alltickets
     - myworking
     - ticketinfo <ticketid> - Not useful on its own.
     - ticketcomments <ticketid> - Not useful on its own.
-    - showticket <ticketid>'
+    - showticket <ticketid>
+    - update <ticketid> <comment> [status] [public]
+
+    <param> - required param
+    [param] - optional param'
   end
 end

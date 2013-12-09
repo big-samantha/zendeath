@@ -13,11 +13,20 @@ class Commands
     puts @password
   end
 
-  def makerequest
+  def makerequest(type='Get', body='')
     @http = Net::HTTP.new(@uri.host, @uri.port)
     @http.use_ssl = true
     @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    @request = Net::HTTP::Get.new(@uri.request_uri)
+
+    if type == 'Get'
+      @request = Net::HTTP::Get.new(@uri.request_uri)
+    elsif type == 'Put'
+      @request = Net::HTTP::Put.new(@uri.request_uri)
+      @reqest.body = body
+    else
+      raise ArgumentError.new('Unrecognized HTTP request type.')
+    end
+
     @request.basic_auth(@username, @password)
     return @response = @http.request(@request).body
   end
@@ -110,4 +119,23 @@ class Commands
       puts "########################"
     end
   end
+
+  def updateticket(ticketid, comment, status='open', is_public='true')
+    # https://support.puppetlabs.com/api/v2/tickets/3717.json
+    @uri.path = "/api/v2/tickets/#{ticketid.to_s}.json"
+    unless status == ('pending' || 'open' || 'on-hold' || 'solved')
+      raise ArgumentError.new('Valid ticket status is pending, on-hold, open, or solved.')
+    end
+    updatearray = { 
+      'ticket' => {
+        'comment' => { 'body' => comment, 'public' => is_public },
+        'status'  => status
+      }
+    }
+    updatearray_json = updatearray.to_json
+    response = makerequest('Put', updatearray_json)
+    binding.pry
+  end
+
+
 end
