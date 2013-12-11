@@ -4,7 +4,7 @@ An open source command-line client for Zendesk.
 
 Primarly created as a learning experience.
 
-Copy `config.yaml.example` to `config.yaml` and fill in relevant
+Copy `.zendeath.yaml.example` to `~/.zendeath.yaml` and fill in relevant
 details.
 
 Current commands include:

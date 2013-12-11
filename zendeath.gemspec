@@ -1,0 +1,14 @@
+Gem::Specification.new do |s|
+  s.name        = 'zendeath'
+  s.version     = '0.0.1'
+  s.date        = '2013-12-10'
+  s.summary     = "Command Line Zendeath"
+  s.description = "Zendeath is a command line client for Zendeath, primarily focused on Puppet Labs' use case, but may be made more generic in the future."
+  s.authors     = ["Zachary Alex Stern"]
+  s.email       = 'zacharyalexstern@gmail.com'
+  s.files        = Dir["{lib}/**/*.rb", "bin/*", "LICENSE", "*.md"]
+  s.executables << 'zendeath'
+  s.homepage    =
+    'https://github.com/zacharyalexstern/zendeath'
+  s.license       = 'WTFPL'
+end

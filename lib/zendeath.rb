@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-$LOAD_PATH << File.dirname(__FILE__)
+#$LOAD_PATH << File.dirname(__FILE__)
 
 module Zendeath
   require 'net/http'
@@ -7,9 +7,9 @@ module Zendeath
   require 'yaml'
   require 'json'
   require 'pry'
-  require 'commands.rb'
+  require 'commands'
 
-  configdata = YAML.load_file('config.yaml')
+  configdata = YAML.load_file(ENV['HOME'] + '/.zendeath.yaml')
   baseurl = configdata[:baseurl]
   username = configdata[:username]
   password = configdata[:password]
