@@ -6,7 +6,6 @@ module Zendeath
   require 'net/https'
   require 'yaml'
   require 'json'
-  require 'pry'
   require 'commands'
 
   configdata = YAML.load_file(ENV['HOME'] + '/.zendeath.yaml')

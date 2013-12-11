@@ -71,8 +71,6 @@ class Commands
       alltickets.concat(@response['tickets'])
     end
 
-    binding.pry
-
     unsolved_tickets = alltickets.reject { |element| element['status'] == 'closed' }
 
     puts "Total Tickets: #{alltickets.length.to_s}"
@@ -134,7 +132,6 @@ class Commands
     }
     updatearray_json = updatearray.to_json
     response = makerequest('Put', updatearray_json)
-    binding.pry
   end
 
 
