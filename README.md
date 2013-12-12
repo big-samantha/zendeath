@@ -28,3 +28,5 @@ No tests because I don't know how to write tests yet.
 - [ ] showticket should left/right justify for requester/agent
 - [ ] Ability to post updates to tickets
 - [ ] Ability to change status of tickets
+
+[![Gem Version](https://badge.fury.io/rb/zendeath.png)](http://badge.fury.io/rb/zendeath)
