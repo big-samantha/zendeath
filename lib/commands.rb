@@ -22,7 +22,8 @@ class Commands
       @request = Net::HTTP::Get.new(@uri.request_uri)
     elsif type == 'Put'
       @request = Net::HTTP::Put.new(@uri.request_uri)
-      @reqest.body = body
+      @request['Content-Type'] = 'application/json'
+      @request.body = body
     else
       raise ArgumentError.new('Unrecognized HTTP request type.')
     end
@@ -118,16 +119,14 @@ class Commands
     end
   end
 
-  def updateticket(ticketid, comment, status='open', is_public='true')
+  def updateticket(ticketid, comment, status='open', is_public='false')
     # https://support.puppetlabs.com/api/v2/tickets/3717.json
     @uri.path = "/api/v2/tickets/#{ticketid.to_s}.json"
-    unless status == ('pending' || 'open' || 'on-hold' || 'solved')
-      raise ArgumentError.new('Valid ticket status is pending, on-hold, open, or solved.')
-    end
+
     updatearray = { 
       'ticket' => {
-        'comment' => { 'body' => comment, 'public' => is_public },
-        'status'  => status
+        'status'  => status,
+        'comment' => { 'body' => comment, 'public' => is_public }
       }
     }
     updatearray_json = updatearray.to_json
