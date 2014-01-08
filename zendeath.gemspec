@@ -11,4 +11,5 @@ Gem::Specification.new do |s|
   s.homepage    =
     'https://github.com/zacharyalexstern/zendeath'
   s.license       = 'WTFPL'
+  s.add_runtime_dependency 'cri', '~> 2.4.1'
 end
